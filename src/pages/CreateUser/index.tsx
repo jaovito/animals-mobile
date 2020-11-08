@@ -12,7 +12,9 @@ import { Container,
   Title,
   SecretTitle,
   DogImage,
-  KeyboardView } from './styles';
+  KeyboardView,
+  Button,
+  ButtonText, } from './styles';
 
 import dogImg from '../../assets/icons/dog.png'
 
@@ -62,6 +64,10 @@ const CreateUser: React.FC = () => {
           />
           <City autoCapitalize='words' placeholder='Cidade' />
         </InfoContainer>
+
+        <Button>
+          <ButtonText>Cadastrar</ButtonText>
+        </Button>
       </KeyboardView>
     </>
   );

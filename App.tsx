@@ -1,6 +1,9 @@
+import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import Routes from './src/Routes';
+import { NavigationContainer } from '@react-navigation/native';
+import IndexRoutes from './src/index.routes';
+import {AuthContext} from './src/context/AuthContext'
 
 import { AppLoading } from 'expo';
 import {
@@ -20,12 +23,15 @@ export default function App() {
     Poppins_700Bold
   })
 
+
   if (!fontsLoaded) return <AppLoading />
 
   return (
-    <>
+    <NavigationContainer>
       <StatusBar style='light' />
-      <Routes />
-    </>
+      <AuthContext>
+        <IndexRoutes />
+      </AuthContext>
+    </NavigationContainer>
   );
 }

@@ -131,3 +131,19 @@ export const City = styled.TextInput`
   text-align: center;
   border-radius: 8px
 `
+export const Button = styled.TouchableOpacity`
+  background-color: #1C9209;
+  width: 80%;
+  height: 50px;
+
+  border-radius: 8px;
+
+  align-items: center;
+  justify-content: center;
+`
+
+export const ButtonText = styled.Text`
+  font-size: 21px;
+  color: #EEE;
+  font-family: 'Poppins_700Bold'
+`
