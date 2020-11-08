@@ -9,5 +9,5 @@ $ git clone https://github.com/jaovito/animals-mobile.git
 ```
 
 ```bash
-$ yarn install <!-- /or npm install -->
+$ yarn install <!--- /or npm install --->
 ```
