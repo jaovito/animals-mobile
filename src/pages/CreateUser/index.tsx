@@ -17,15 +17,30 @@ import { Container,
   ButtonText, } from './styles';
 
 import dogImg from '../../assets/icons/dog.png'
+import api from '../../services/api';
+import { useNavigation } from '@react-navigation/native';
 
 const CreateUser: React.FC = () => {
-  const [focus, setFocus] = useState(false)
+  const [name, setName] = useState('')
+  const [second_name, setSecondName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [whatsapp, setWhatsapp] = useState('')
+  const [city, setCity] = useState('')
 
-  function handleSetFocusTrue() {
-    setFocus(true)
-  }
-  function handleSetFocusFalse() {
-    setFocus(false)
+  const {navigate} = useNavigation()
+
+  async function handleCreate() {
+    await api.post('register', {
+      name,
+      second_name,
+      email,
+      password,
+      whatsapp,
+      city
+    })
+
+    navigate('AuthUser')
   }
 
   return (
@@ -50,22 +65,23 @@ const CreateUser: React.FC = () => {
         <DogImage source={dogImg} />
 
         <NameContainer>
-          <Name placeholder='Nome' />
-          <SecondName placeholder='Sobrenome' />
+          <Name value={name} onChangeText={setName} placeholder='Nome' />
+          <SecondName value={second_name} onChangeText={setSecondName} placeholder='Sobrenome' />
         </NameContainer>
 
-        <Email keyboardType='email-address' textContentType='emailAddress' placeholder='E-mail' />
-        <Password textContentType='password' secureTextEntry={true} placeholder='Senha' />
+        <Email value={email} onChangeText={setEmail} autoCapitalize='none' keyboardType='email-address' textContentType='emailAddress' placeholder='E-mail' />
+        <Password value={password} onChangeText={setPassword} textContentType='password' secureTextEntry={true} placeholder='Senha' />
 
         <InfoContainer>
           <Whatsapp 
+            value={whatsapp} onChangeText={setWhatsapp}
             placeholder='Whatsapp'
             keyboardType='numeric'
           />
-          <City autoCapitalize='words' placeholder='Cidade' />
+          <City value={city} onChangeText={setCity} autoCapitalize='words' placeholder='Cidade' />
         </InfoContainer>
 
-        <Button>
+        <Button onPress={handleCreate}>
           <ButtonText>Cadastrar</ButtonText>
         </Button>
       </KeyboardView>

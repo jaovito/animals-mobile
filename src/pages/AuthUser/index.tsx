@@ -38,7 +38,7 @@ const AuthUser: React.FC = () => {
       <Background>
         <Title>Bem-vindo</Title>
         <InputView>
-          <Email value={email} onChangeText={setEmail} placeholder='E-mail' textContentType='emailAddress' keyboardType='email-address' />
+          <Email value={email} autoCapitalize="none" onChangeText={setEmail} placeholder='E-mail' textContentType='emailAddress' keyboardType='email-address' />
           <Password value={password} onChangeText={setPassword} placeholder='Senha' textContentType='password' secureTextEntry={true} />
         </InputView>
 

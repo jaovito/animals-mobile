@@ -1,7 +1,8 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import backgroundImg from '../../assets/icons/Cat.png'
 import { Feather } from '@expo/vector-icons'; 
 import {Context} from '../../context/AuthContext';
+import { BorderlessButton } from 'react-native-gesture-handler';
 
 import { 
     Container,
@@ -16,11 +17,53 @@ import {
     Description,
     City,
     ViewMore,
-    ViewTitle
+    ViewTitle,
+    AddButton,
+    CityDescription,
+    ImagesContainer,
+    Header,
+    LogOut
  } from './styles';
+import { useNavigation } from '@react-navigation/native';
+import api from '../../services/api';
+
+interface Animals {
+    id: number;
+    user_id: number;
+    name: string;
+    description: string;
+    breed: string;
+    citie: string;
+    images: [
+        {id: number, url: string, path: string},
+    ]
+}
 
 const ForgotUser: React.FC = () => {
+    const [cards, setCards] = useState<Animals[]>([]);
+
     const {handleLogout} = useContext(Context)
+
+    useEffect(() => {
+        api.get('animals').then(response => setCards(response.data)).catch(err => {
+            alert(err)
+        });
+        
+        return () => {
+            setCards([]);
+        }
+    }, [])
+    
+    const {navigate} = useNavigation()
+
+    function handleGoCreate() {
+        navigate('CreateAnimal')
+    }
+    function handleGoInfo() {
+        navigate('AnimalInfo')
+    }
+
+    if (!cards) return <Title>Não há animais aqui :(</Title>
 
   return (
       <Container colors={['#ED4D08', '#ED9108']}
@@ -34,29 +77,58 @@ const ForgotUser: React.FC = () => {
         }}
       >
         <Background source={backgroundImg}>
-            <Title>Precisa de um amigo?</Title>
+            <Header>
+                <Title>
+                    Precisa de um amigo?
+                </Title>
+
+                <LogOut style={{
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: 30,
+                }} onPress={handleLogout}>
+                    <Feather name='log-out' size={34} color='#FFF' />
+                </LogOut>
+            </Header>
             <SubTitle>Fique a vontade para procurar!</SubTitle>
             
             <Content contentContainerStyle={{
                 alignItems: 'center',
                 justifyContent: 'center',
             }}>
-                <Card>
-                    <AnimalImg source={{
-                        uri: 'https://super.abril.com.br/wp-content/uploads/2018/05/filhotes-de-cachorro-alcanc3a7am-o-c3a1pice-de-fofura-com-8-semanas1.png'
-                    }} />
+                {cards.map(card => (
+                    <Card key={card.id}>
+                    <ImagesContainer horizontal pagingEnabled>
+                        {card.images.map(img => (
+                            <AnimalImg
+                            key={img.id}
+                             source={{
+                                uri: img.url
+                            }} />
+                            )
+                        )
+                        }
+                    </ImagesContainer>
                     <TextContainer>
-                        <AnimalName>Princesa</AnimalName>
-                        <Description>Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo eos iste doloremque itaque dolore est quae, porro ut at dolores debitis incidunt, quia optio. Asperiores unde et minus est nostrum?</Description>
-                        <Description>Cidade: <City>Sorocaba</City></Description>
+                        <AnimalName>{card.name}</AnimalName>
+                        <Description>{card.description}</Description>
+                        <CityDescription>Cidade: <City>{card.citie}</City></CityDescription>
+                        <Description>Raça: <City>{card.breed}</City></Description>
                     </TextContainer>
                     
-                    <ViewMore onPress={() => handleLogout()}>
+                    <ViewMore onPress={() => {
+                        navigate('AnimalInfo', {id: card.id})
+                    }}>
                         <ViewTitle>Ver mais</ViewTitle>
                         <Feather name="arrow-right" size={24} color="#9871F5" />
                     </ViewMore>
                 </Card>
+                ))}
             </Content>
+
+            <AddButton onPress={handleGoCreate} >
+                <Feather name="plus" size={34} color="#FFF" />
+            </AddButton>
         </Background>
       </Container>
   );
