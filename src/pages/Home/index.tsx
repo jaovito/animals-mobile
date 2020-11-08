@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import backgroundImg from '../../assets/icons/Cat.png'
-import kittyImg from '../../assets/icons/catChar.png'
+import { Feather } from '@expo/vector-icons'; 
+import {Context} from '../../context/AuthContext';
 
 import { 
     Container,
@@ -14,9 +15,13 @@ import {
     AnimalName,
     Description,
     City,
+    ViewMore,
+    ViewTitle
  } from './styles';
 
 const ForgotUser: React.FC = () => {
+    const {handleLogout} = useContext(Context)
+
   return (
       <Container colors={['#ED4D08', '#ED9108']}
         start={{
@@ -45,6 +50,11 @@ const ForgotUser: React.FC = () => {
                         <Description>Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo eos iste doloremque itaque dolore est quae, porro ut at dolores debitis incidunt, quia optio. Asperiores unde et minus est nostrum?</Description>
                         <Description>Cidade: <City>Sorocaba</City></Description>
                     </TextContainer>
+                    
+                    <ViewMore onPress={() => handleLogout()}>
+                        <ViewTitle>Ver mais</ViewTitle>
+                        <Feather name="arrow-right" size={24} color="#9871F5" />
+                    </ViewMore>
                 </Card>
             </Content>
         </Background>

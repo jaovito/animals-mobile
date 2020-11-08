@@ -87,3 +87,20 @@ export const City = styled.Text`
 
     color: #888;
 `
+export const ViewMore = styled.TouchableOpacity`
+    flex-direction: row;
+    align-self: flex-end;
+
+    align-items: center;
+    justify-content: center;
+    
+    padding: 5%;
+`
+
+export const ViewTitle = styled.Text`
+    font-size: 20px;
+    margin-right: 1%;
+    color: #9871F5;
+
+    margin-bottom: 3px;
+`
