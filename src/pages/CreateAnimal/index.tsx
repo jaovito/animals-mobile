@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import {ActivityIndicator} from 'react-native'
+
 import { useNavigation } from '@react-navigation/native';
 import {Feather} from '@expo/vector-icons'
 import { Container, ImagesInput, Input, Label, Title, UploadedImage, UploadedImagesContainer, Background, NextButton, NextButtonText } from './styles';
@@ -15,9 +17,13 @@ const CreateAnimal: React.FC = () => {
     const [uf, setUf] = useState('')
     const [images, setImages] = useState<string[]>([])
 
+    const [loading, setLoading] = useState(false)
+
     const {navigate} = useNavigation()
 
     async function handleCreateAnimal() {
+        setLoading(true)
+
         const data = new FormData()
 
         data.append('name', name)
@@ -36,6 +42,7 @@ const CreateAnimal: React.FC = () => {
         })
 
         await api.post('animals', data).catch(err => alert(err))
+        setLoading(false)
         navigate('Home')
     }
 
@@ -133,7 +140,7 @@ const CreateAnimal: React.FC = () => {
         />
 
         <NextButton onPress={handleCreateAnimal}>
-            <NextButtonText>Cadastrar</NextButtonText>
+            {loading ? <ActivityIndicator color="#fff" size={30} /> : <NextButtonText>Cadastrar</NextButtonText>}
         </NextButton>
     </Container>
     </>

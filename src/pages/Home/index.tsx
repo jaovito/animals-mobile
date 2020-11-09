@@ -24,7 +24,7 @@ import {
     Header,
     LogOut
  } from './styles';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import api from '../../services/api';
 
 interface Animals {
@@ -59,9 +59,6 @@ const ForgotUser: React.FC = () => {
     function handleGoCreate() {
         navigate('CreateAnimal')
     }
-    function handleGoInfo() {
-        navigate('AnimalInfo')
-    }
 
     if (!cards) return <Title>Não há animais aqui :(</Title>
 
@@ -85,7 +82,6 @@ const ForgotUser: React.FC = () => {
                 <LogOut style={{
                     alignItems: 'center',
                     justifyContent: 'center',
-                    padding: 30,
                 }} onPress={handleLogout}>
                     <Feather name='log-out' size={34} color='#FFF' />
                 </LogOut>

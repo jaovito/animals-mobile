@@ -1,10 +1,11 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import React, { createContext, useState, useEffect } from 'react';
+import { Alert } from 'react-native';
 import api from '../services/api';
 
 interface AuthContextData {
     authenticated: boolean;
-    handleLogin(email: string, password: string): void;
+    handleLogin(email: string, password: string): Promise<void>;
     loading: boolean;
     handleLogout(): void
 }
@@ -32,7 +33,12 @@ const AuthContext: React.FC = ({ children }) => {
         const {data} = await api.post('authenticate', {
             email,
             password,
-        })
+        }).catch(err => {
+            Alert.alert(
+                "Alert Title",
+                err
+              );
+        }) as any
 
         AsyncStorage.setItem('token', JSON.stringify(data.token));
         api.defaults.headers.Authorization = `Bearer ${data.token}`;

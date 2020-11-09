@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import {ActivityIndicator} from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import {Context} from '../../context/AuthContext'
 
@@ -9,10 +10,18 @@ import { TouchableOpacity } from 'react-native';
 const AuthUser: React.FC = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const {navigate} = useNavigation()
 
   const {handleLogin} = useContext(Context)
+
+  async function handleDoLogin() {
+    setLoading(true)
+    await handleLogin(email, password)
+
+    setLoading(false)
+  }
 
   function handleGoCreateUser() {
     navigate('CreateUser')
@@ -52,8 +61,8 @@ const AuthUser: React.FC = () => {
           </TouchableOpacity>
         </AccountOptions>
 
-        <ButtonSubmitTrue onPress={() => handleLogin(email, password)}>
-          <ButtonTextTrue>Entrar</ButtonTextTrue>
+        <ButtonSubmitTrue onPress={handleDoLogin}>
+          {loading ? <ActivityIndicator color="#FFF" size={30} /> : <ButtonTextTrue>Entrar</ButtonTextTrue>}
         </ButtonSubmitTrue>
       </Background>
       

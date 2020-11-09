@@ -19,6 +19,7 @@ import { Container,
 import dogImg from '../../assets/icons/dog.png'
 import api from '../../services/api';
 import { useNavigation } from '@react-navigation/native';
+import { ActivityIndicator } from 'react-native';
 
 const CreateUser: React.FC = () => {
   const [name, setName] = useState('')
@@ -27,10 +28,13 @@ const CreateUser: React.FC = () => {
   const [password, setPassword] = useState('')
   const [whatsapp, setWhatsapp] = useState('')
   const [city, setCity] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const {navigate} = useNavigation()
 
   async function handleCreate() {
+    setLoading(true)
+
     await api.post('register', {
       name,
       second_name,
@@ -40,6 +44,7 @@ const CreateUser: React.FC = () => {
       city
     })
 
+    setLoading(false)
     navigate('AuthUser')
   }
 
@@ -82,7 +87,7 @@ const CreateUser: React.FC = () => {
         </InfoContainer>
 
         <Button onPress={handleCreate}>
-          <ButtonText>Cadastrar</ButtonText>
+          {loading ? <ActivityIndicator color='#fff' size={30} /> : <ButtonText>Cadastrar</ButtonText>}
         </Button>
       </KeyboardView>
     </>
