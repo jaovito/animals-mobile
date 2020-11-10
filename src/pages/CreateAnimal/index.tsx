@@ -24,24 +24,28 @@ const CreateAnimal: React.FC = () => {
     async function handleCreateAnimal() {
         setLoading(true)
 
-        const data = new FormData()
+        const {data} = await api.post('animals', {
+            name,
+            description,
+            contact,
+            reason_adoption,
+            breed,
+            citie: `${citie} - ${uf}`,
+        }) 
 
-        data.append('name', name)
-        data.append('description', description)
-        data.append('contact', contact)
-        data.append('reason_adoption', reason_adoption)
-        data.append('breed', breed)
-        data.append('citie', String(citie + uf))
+        const id = await data.id
 
-        images.forEach((image, index) => {
-            data.append('image[]', {
-                name: `image[]_${index}.jpg`,
+        const imageData = new FormData()
+
+        images.forEach(async (image, index) => {
+             imageData.append('image', {
+                name: `image_${index}.jpg`,
                 type: 'image/jpg',
                 uri: image
             } as any)
         })
 
-        await api.post('animals', data).catch(err => alert(err))
+        await api.post(`animal/${id}`, imageData).catch(err => alert(err))
         setLoading(false)
         navigate('Home')
     }

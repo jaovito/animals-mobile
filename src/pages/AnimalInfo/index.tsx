@@ -4,6 +4,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Container, ImagesContainer, Image, DetailsContainer, Description, Title, ContactButton, ContactButtonText, City, ReasonAdoptionTitle, ReasonAdoption, Breed } from './styles';
 import api from '../../services/api';
 import { useRoute } from '@react-navigation/native';
+import { Linking } from 'react-native';
 
 interface Route {
   id: number;
@@ -52,6 +53,10 @@ const AnimalInfo: React.FC = () => {
     }
   }, [params.id])
 
+  function handleGoWhatsapp() {
+    Linking.openURL(`https://wa.me/${contact}/?text=Olá, gostaria de informações sobre o(a) ${name}`)
+  }
+
   return (
     <Container>
       <ImagesContainer horizontal pagingEnabled>
@@ -81,7 +86,7 @@ const AnimalInfo: React.FC = () => {
       </DetailsContainer>
 
 
-      <ContactButton>
+      <ContactButton onPress={handleGoWhatsapp}>
         <MaterialCommunityIcons name='whatsapp' size={24} color='#FFF' />
         <ContactButtonText>Whatsapp</ContactButtonText>
       </ContactButton>

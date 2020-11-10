@@ -130,7 +130,7 @@ export const AddButton = styled(RectButton)`
     border-radius: 20px;
 
     position: absolute;
-    bottom: 50px;
+    bottom: 80px;
     right: 10px;
 
     padding: 4%;

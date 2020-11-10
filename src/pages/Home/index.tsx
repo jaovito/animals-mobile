@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import backgroundImg from '../../assets/icons/Cat.png'
 import { Feather } from '@expo/vector-icons'; 
 import {Context} from '../../context/AuthContext';
@@ -40,19 +40,19 @@ interface Animals {
 }
 
 const ForgotUser: React.FC = () => {
-    const [cards, setCards] = useState<Animals[]>([]);
+    const [cards, setCards] = useState<Animals[] | null>();
 
     const {handleLogout} = useContext(Context)
 
-    useEffect(() => {
-        api.get('animals').then(response => setCards(response.data)).catch(err => {
-            alert(err)
-        });
-        
-        return () => {
-            setCards([]);
-        }
-    }, [])
+    useFocusEffect(
+        useCallback(() => {
+            api.get('animals').then(response => setCards(response.data)).catch(err => {
+                alert(err)
+            });
+
+            return () => setCards(null)
+         }, [])
+    )
     
     const {navigate} = useNavigation()
 

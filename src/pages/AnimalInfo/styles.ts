@@ -7,7 +7,7 @@ export const Container = styled.ScrollView`
 `
 
 export const ImagesContainer = styled.ScrollView`
-    height: 240px;
+    height: 100%;
 `
 
 export const Image = styled.Image`
