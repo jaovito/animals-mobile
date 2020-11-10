@@ -26,7 +26,9 @@ export const Header = styled.View`
 `
 
 export const LogOut = styled.TouchableOpacity`
-    
+    position: relative;
+    top: ${Dimensions.get('window').height / 20}px;
+    right: ${Dimensions.get('window').width / 11}px;
 `
 
 export const Title = styled.Text`
