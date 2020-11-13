@@ -2,7 +2,6 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import backgroundImg from '../../assets/icons/Cat.png'
 import { Feather } from '@expo/vector-icons'; 
 import {Context} from '../../context/AuthContext';
-import { BorderlessButton } from 'react-native-gesture-handler';
 
 import { 
     Container,
@@ -22,7 +21,8 @@ import {
     CityDescription,
     ImagesContainer,
     Header,
-    LogOut
+    LogOut,
+    Loading
  } from './styles';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import api from '../../services/api';
@@ -41,15 +41,20 @@ interface Animals {
 
 const ForgotUser: React.FC = () => {
     const [cards, setCards] = useState<Animals[] | null>();
+    const [loading, setLoading] = useState(false);
 
     const {handleLogout} = useContext(Context)
 
     useFocusEffect(
         useCallback(() => {
-            api.get('animals').then(response => setCards(response.data)).catch(err => {
+            setLoading(true);
+            api.get('animals').then(response => {
+                setCards(response.data);
+            }).catch(err => {
                 alert(err)
             });
-
+            
+            setLoading(false);
             return () => setCards(null)
          }, [])
     )
@@ -60,9 +65,41 @@ const ForgotUser: React.FC = () => {
         navigate('CreateAnimal')
     }
 
-    if (!cards) return <Title>Não há animais aqui :(</Title>
+    if (!cards) return (
+        <>
+        <Container colors={['#ED4D08', '#ED9108']}
+        start={{
+            x: 0,
+            y: 0
+        }}
+        end={{
+            x: 1,
+            y: 1
+        }}
+      >
+
+        <Background source={backgroundImg}>
+        <Header>
+        <Title>
+            Precisa de um amigo?
+        </Title>
+
+        <LogOut style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+        }} onPress={handleLogout}>
+            <Feather name='log-out' size={34} color='#FFF' />
+        </LogOut>
+        </Header>
+        <SubTitle>Fique a vontade para procurar!</SubTitle>
+      <Loading size={50} color="#fff" />
+    </Background>
+    </Container>
+    </>
+    )
 
   return (
+      <>
       <Container colors={['#ED4D08', '#ED9108']}
         start={{
             x: 0,
@@ -73,21 +110,25 @@ const ForgotUser: React.FC = () => {
             y: 1
         }}
       >
+
         <Background source={backgroundImg}>
             <Header>
-                <Title>
-                    Precisa de um amigo?
-                </Title>
-
-                <LogOut style={{
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                }} onPress={handleLogout}>
-                    <Feather name='log-out' size={34} color='#FFF' />
-                </LogOut>
+            <Title>
+                Precisa de um amigo?
+            </Title>
+  
+            <LogOut style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+            }} onPress={handleLogout}>
+                <Feather name='log-out' size={34} color='#FFF' />
+            </LogOut>
             </Header>
             <SubTitle>Fique a vontade para procurar!</SubTitle>
-            
+        
+            {loading ? (
+          <Loading size={50} color="#fff" />
+            ) : (
             <Content contentContainerStyle={{
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -121,12 +162,14 @@ const ForgotUser: React.FC = () => {
                 </Card>
                 ))}
             </Content>
+            )}
 
             <AddButton onPress={handleGoCreate} >
                 <Feather name="plus" size={34} color="#FFF" />
             </AddButton>
         </Background>
       </Container>
+    </>
   );
 }
 

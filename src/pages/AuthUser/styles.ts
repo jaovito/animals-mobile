@@ -86,3 +86,16 @@ export const ButtonTextTrue = styled.Text`
 
   color: #FFF;
 `
+
+export const ButtonSubmitFalse = styled.View`
+  width: 90%;
+  height: 61px;
+
+  align-items: center;
+  justify-content: center;
+  background-color: #999;
+
+  border-radius: 8px;
+
+  margin-top: 5%;
+`

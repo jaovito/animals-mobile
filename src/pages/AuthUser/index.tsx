@@ -1,25 +1,35 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {ActivityIndicator} from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import {Context} from '../../context/AuthContext'
 
-import { Container, Title, Email, Password, InputView, AccountOptions, CreateAccount, ButtonSubmitTrue, ButtonTextTrue } from './styles';
+import { Container, Title, Email, Password, InputView, AccountOptions, CreateAccount, ButtonSubmitTrue, ButtonTextTrue, ButtonSubmitFalse } from './styles';
 import Background from '../../components/Background'
 import { TouchableOpacity } from 'react-native';
+import { DisabledButton } from '../CreateAnimal/styles';
 
 const AuthUser: React.FC = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
+  const [disabled, setDisabled] = useState(true)
 
   const {navigate} = useNavigation()
 
   const {handleLogin} = useContext(Context)
 
+  useEffect(() => {
+    if (email && password) {
+      setDisabled(false)
+    }
+  }, [email,
+    password])
+
   async function handleDoLogin() {
     setLoading(true)
+    setDisabled(true)
     await handleLogin(email, password)
-
+    setDisabled(false)
     setLoading(false)
   }
 
@@ -61,9 +71,15 @@ const AuthUser: React.FC = () => {
           </TouchableOpacity>
         </AccountOptions>
 
-        <ButtonSubmitTrue onPress={handleDoLogin}>
-          {loading ? <ActivityIndicator color="#FFF" size={30} /> : <ButtonTextTrue>Entrar</ButtonTextTrue>}
-        </ButtonSubmitTrue>
+        {disabled ? (
+          <ButtonSubmitFalse>
+            {loading ? <ActivityIndicator color="#FFF" size={30} /> : <ButtonTextTrue>Entrar</ButtonTextTrue>}
+          </ButtonSubmitFalse>
+        ) : (
+          <ButtonSubmitTrue onPress={handleDoLogin}>
+            {loading ? <ActivityIndicator color="#FFF" size={30} /> : <ButtonTextTrue>Entrar</ButtonTextTrue>}
+          </ButtonSubmitTrue>
+        )}
       </Background>
       
 

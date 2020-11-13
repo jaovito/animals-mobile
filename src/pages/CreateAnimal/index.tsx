@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {ActivityIndicator} from 'react-native'
 
 import { useNavigation } from '@react-navigation/native';
 import {Feather} from '@expo/vector-icons'
-import { Container, ImagesInput, Input, Label, Title, UploadedImage, UploadedImagesContainer, Background, NextButton, NextButtonText } from './styles';
+import { Container, ImagesInput, Input, Label, Title, UploadedImage, UploadedImagesContainer, Background, NextButton, NextButtonText, DisabledButton } from './styles';
 import api from '../../services/api';
 import * as ImagePicker from 'expo-image-picker';
 
@@ -16,38 +16,59 @@ const CreateAnimal: React.FC = () => {
     const [citie, setCitie] = useState('')
     const [uf, setUf] = useState('')
     const [images, setImages] = useState<string[]>([])
+    const [disabled, setDisabled] = useState(true)
 
     const [loading, setLoading] = useState(false)
 
     const {navigate} = useNavigation()
 
+    useEffect(() => {
+        if (name && description && contact && reason_adoption && breed && citie && uf && images.length > 0) {
+            setDisabled(false);
+        }
+    }, [name,
+        description,
+        contact,
+        reason_adoption,
+        breed,
+        citie,
+        uf,
+        images,])
+
     async function handleCreateAnimal() {
         setLoading(true)
 
-        const {data} = await api.post('animals', {
-            name,
-            description,
-            contact,
-            reason_adoption,
-            breed,
-            citie: `${citie} - ${uf}`,
-        }) 
+        if (!name || !description || !contact || !reason_adoption || !breed || !citie || !uf || !images) {
+            alert('Prencha todos os campos')
+        } else {
+            setDisabled(true)
+            const {data} = await api.post('animals', {
+                name,
+                description,
+                contact,
+                reason_adoption,
+                breed,
+                citie: `${citie} - ${uf}`,
+            }) 
+    
+            const id = await data.id
+    
+            const imageData = new FormData()
+    
+            images.forEach(async (image, index) => {
+                 imageData.append('image', {
+                    name: `image_${index}.jpg`,
+                    type: 'image/jpg',
+                    uri: image
+                } as any)
+            })
+    
+            await api.post(`animal/${id}`, imageData).catch(err => alert(err))
+            setLoading(false)
+            setDisabled(false)
+            navigate('Home')
+        }
 
-        const id = await data.id
-
-        const imageData = new FormData()
-
-        images.forEach(async (image, index) => {
-             imageData.append('image', {
-                name: `image_${index}.jpg`,
-                type: 'image/jpg',
-                uri: image
-            } as any)
-        })
-
-        await api.post(`animal/${id}`, imageData).catch(err => alert(err))
-        setLoading(false)
-        navigate('Home')
     }
 
 
@@ -143,9 +164,15 @@ const CreateAnimal: React.FC = () => {
             onChangeText={setUf}
         />
 
-        <NextButton onPress={handleCreateAnimal}>
-            {loading ? <ActivityIndicator color="#fff" size={30} /> : <NextButtonText>Cadastrar</NextButtonText>}
-        </NextButton>
+        {disabled ? (
+            <DisabledButton>
+                {loading ? <ActivityIndicator color="#fff" size={30} /> : <NextButtonText>Cadastrar</NextButtonText>}
+            </DisabledButton>
+        ) : (
+            <NextButton onPress={handleCreateAnimal}>
+                {loading ? <ActivityIndicator color="#fff" size={30} /> : <NextButtonText>Cadastrar</NextButtonText>}
+            </NextButton>
+        )}
     </Container>
     </>
   );

@@ -88,3 +88,12 @@ export const NextButtonText = styled.Text`
     font-size: 16px;
     color: #FFF;
 `
+
+export const DisabledButton = styled.View`
+    background-color: #9999;
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center;
+    height: 56px;
+    margin-top: 32px;
+`

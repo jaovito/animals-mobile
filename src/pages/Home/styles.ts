@@ -10,6 +10,9 @@ export const Container = styled(LinearGradient)`
   justify-content: center;
 `
 
+export const Loading = styled.ActivityIndicator`
+`
+
 export const Background = styled.ImageBackground`
     flex: 1;
     width: 100%;
