@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
-import { Container, ImagesContainer, Image, DetailsContainer, Description, Title, ContactButton, ContactButtonText, City, ReasonAdoptionTitle, ReasonAdoption, Breed } from './styles';
+import { Container, ImagesContainer, Image, DetailsContainer, Description, Title, ContactButton, ContactButtonText, City, ReasonAdoptionTitle, ReasonAdoption, Breed, Adoption, Adopted } from './styles';
 import api from '../../services/api';
 import { useRoute } from '@react-navigation/native';
 import { Linking } from 'react-native';
@@ -23,6 +23,7 @@ const AnimalInfo: React.FC = () => {
   const [breed, setBreed] = useState('')
   const [city, setCity] = useState('')
   const [contact, setContact] = useState('')
+  const [adopted, setAdopted] = useState(false)
   const [images, setImages] = useState<AnimalImage[]>([])
 
   const route = useRoute();
@@ -37,6 +38,7 @@ const AnimalInfo: React.FC = () => {
       setBreed(response.data.breed);
       setCity(response.data.citie);
       setContact(response.data.contact);
+      setAdopted(response.data.adopted);
       setImages(response.data.images);
     }).catch(err => {
       alert(err)
@@ -82,7 +84,17 @@ const AnimalInfo: React.FC = () => {
       </ReasonAdoption>
 
       <City>Cidade:{'    '}{city}</City>
-        <Breed>Raça:{' '} {breed}</Breed>
+      <Breed>Raça:{' '} {breed}</Breed>
+
+      {adopted ? <Adopted>
+        Adotado
+        <MaterialCommunityIcons name="emoticon-happy" size={36} color="#801111" />
+      </Adopted> : (
+        <Adoption>
+          Em adoção
+        <MaterialCommunityIcons name="dog" size={36} color="#3CDC8C" />
+        </Adoption>
+      )}
       </DetailsContainer>
 
 

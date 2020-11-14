@@ -44,18 +44,18 @@ const UserData: React.FC = () => {
     const [whatsapp, setWhatsapp] = useState('');
     const [city, setCity] = useState('');
 
-    const {user, handleLogout} = useContext(Context)
+    const { handleLogout } = useContext(Context)
 
     useFocusEffect(
         useCallback(() => {
             setLoading(true);
 
-            if (user) {
-                setName(user.name);
-                setSecondName(user.second_name);
-                setWhatsapp(user.whatsapp);
-                setCity(user.city);
-            }
+            api.get('user').then(response => {
+                setName(response.data.name);
+                setSecondName(response.data.second_name);
+                setWhatsapp(response.data.whatsapp);
+                setCity(response.data.city);
+            })
             
             setLoading(false);
          }, [])
@@ -67,38 +67,16 @@ const UserData: React.FC = () => {
         navigate('CreateAnimal')
     }
 
-    if (loading) return (
-        <>
-        <Container colors={['#ED4D08', '#ED9108']}
-        start={{
-            x: 0,
-            y: 0
-        }}
-        end={{
-            x: 1,
-            y: 1
-        }}
-      >
-
-        <Background source={backgroundImg}>
-        <Header>
-        <Title>
-            Meus dados
-        </Title>
-
-        <LogOut style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-        }} onPress={handleLogout}>
-            <Feather name='log-out' size={34} color='#FFF' />
-        </LogOut>
-        </Header>
-        <SubTitle>Aguarde um pouco!</SubTitle>
-      <Loading size={50} color="#fff" />
-    </Background>
-    </Container>
-    </>
-    )
+    async function handleChangeUserData() {
+        setLoading(true);
+        await api.put(`user/${Math.random()}`, {
+            name,
+            second_name,
+            whatsapp,
+            city
+        })
+        setLoading(false);
+    }
 
   return (
       <>
@@ -176,8 +154,8 @@ const UserData: React.FC = () => {
                 
             </Content>
 
-            <Button>
-                <ButtonText>Alterar</ButtonText>
+            <Button onPress={handleChangeUserData}>
+                {loading ? <Loading size={50} color="#fff" /> :<ButtonText>Alterar</ButtonText>}
             </Button>
 
         </Background>

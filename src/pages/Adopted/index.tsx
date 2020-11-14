@@ -17,10 +17,10 @@ import {
     City,
     ViewMore,
     ViewTitle,
-    AddButton,
     CityDescription,
     ImagesContainer,
     Header,
+    LogOut,
     Loading
  } from './styles';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
@@ -38,7 +38,7 @@ interface Animals {
     ]
 }
 
-const Home: React.FC = () => {
+const Adopted: React.FC = () => {
     const [cards, setCards] = useState<Animals[] | null>();
     const [loading, setLoading] = useState(false);
 
@@ -47,7 +47,7 @@ const Home: React.FC = () => {
     useFocusEffect(
         useCallback(() => {
             setLoading(true);
-            api.get('animals').then(response => {
+            api.get('adopted').then(response => {
                 setCards(response.data);
             }).catch(err => {
                 alert(err)
@@ -83,6 +83,12 @@ const Home: React.FC = () => {
             Precisa de um amigo?
         </Title>
 
+        <LogOut style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+        }} onPress={handleLogout}>
+            <Feather name='log-out' size={34} color='#FFF' />
+        </LogOut>
         </Header>
         <SubTitle>Fique a vontade para procurar!</SubTitle>
       <Loading size={50} color="#fff" />
@@ -109,6 +115,13 @@ const Home: React.FC = () => {
             <Title>
                 Precisa de um amigo?
             </Title>
+  
+            <LogOut style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+            }} onPress={handleLogout}>
+                <Feather name='log-out' size={34} color='#FFF' />
+            </LogOut>
             </Header>
             <SubTitle>Fique a vontade para procurar!</SubTitle>
         
@@ -149,14 +162,10 @@ const Home: React.FC = () => {
                 ))}
             </Content>
             )}
-
-            <AddButton onPress={handleGoCreate} >
-                <Feather name="plus" size={34} color="#FFF" />
-            </AddButton>
         </Background>
       </Container>
     </>
   );
 }
 
-export default Home;
+export default Adopted;

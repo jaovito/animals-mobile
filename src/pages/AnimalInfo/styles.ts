@@ -51,7 +51,7 @@ export const ContactButton = styled(RectButton)`
 
     height: 56px;
     width: 95%;
-    margin: 40px auto;
+    margin: 0 auto 40px auto;
 `
 
 export const ContactButtonText = styled.Text`
@@ -79,5 +79,31 @@ export const Breed = styled.Text`
     color: #5c8599;
     font-size: 18px;
     font-family: 'Poppins_700Bold';
+
+`
+
+export const Adoption = styled.Text`
+    margin-top: 10%;
+
+    color: #3CDC8C;
+    font-family: 'Poppins_700Bold';
+    font-size: 26px;
+
+    align-items: center;
+    justify-content: center;
+
+    height: 56px;
+    width: 95%;
+`
+
+export const Adopted = styled.Text`
+    margin-top: 10%;
+
+    color: #801111;
+    font-family: 'Poppins_700Bold';
+    font-size: 26px;
+
+    align-items: center;
+    justify-content: center;
 
 `

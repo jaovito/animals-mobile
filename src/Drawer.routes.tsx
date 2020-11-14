@@ -5,6 +5,7 @@ import { MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons'
 
 import AppRoutes from './App.routes'
 import UserData from './pages/UserData'
+import Adopted from './pages/Adopted'
 
 const { Navigator, Screen } = createBottomTabNavigator()
 
@@ -58,7 +59,7 @@ const DrawerRoute: React.FC = () => {
 
           <Screen 
             name='Adopted' 
-            component={AppRoutes} 
+            component={Adopted} 
             options={{
                 tabBarLabel: 'Já doados',
                 tabBarIcon: ({size, color, focused}) => <MaterialCommunityIcons name='dog-service' size={size} color={ focused ? '#f08915' : color } />
