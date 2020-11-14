@@ -23,7 +23,7 @@ const CreateAnimal: React.FC = () => {
     const {navigate} = useNavigation()
 
     useEffect(() => {
-        if (name && description && contact && reason_adoption && breed && citie && uf && images.length > 0) {
+        if (name && description && contact && reason_adoption && breed && citie && images.length > 0) {
             setDisabled(false);
         }
     }, [name,
@@ -32,13 +32,12 @@ const CreateAnimal: React.FC = () => {
         reason_adoption,
         breed,
         citie,
-        uf,
         images,])
 
     async function handleCreateAnimal() {
         setLoading(true)
 
-        if (!name || !description || !contact || !reason_adoption || !breed || !citie || !uf || !images) {
+        if (!name || !description || !contact || !reason_adoption || !breed || !citie || !images) {
             alert('Prencha todos os campos')
         } else {
             setDisabled(true)
@@ -48,7 +47,7 @@ const CreateAnimal: React.FC = () => {
                 contact,
                 reason_adoption,
                 breed,
-                citie: `${citie} - ${uf}`,
+                citie,
             }) 
     
             const id = await data.id

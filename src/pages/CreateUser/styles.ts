@@ -140,9 +140,28 @@ export const Button = styled.TouchableOpacity`
 
   align-items: center;
   justify-content: center;
+  margin-bottom: 25px;
 `
 
 export const ButtonText = styled.Text`
+  font-size: 21px;
+  color: #EEE;
+  font-family: 'Poppins_700Bold'
+`
+
+export const DisabledButton = styled.View`
+  background-color: #999;
+  width: 80%;
+  height: 50px;
+
+  border-radius: 8px;
+
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 25px;
+`
+
+export const DisabledButtonText = styled.Text`
   font-size: 21px;
   color: #EEE;
   font-family: 'Poppins_700Bold'

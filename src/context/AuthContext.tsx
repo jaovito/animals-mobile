@@ -3,11 +3,20 @@ import React, { createContext, useState, useEffect } from 'react';
 import { Alert } from 'react-native';
 import api from '../services/api';
 
+interface User {
+    id: number;
+    name: string;
+    second_name: string;
+    whatsapp: string;
+    city: string;
+}
+
 interface AuthContextData {
     authenticated: boolean;
     handleLogin(email: string, password: string): Promise<void>;
     loading: boolean;
     handleLogout(): void
+    user: User | null
 }
 
 const Context = createContext<AuthContextData>({} as AuthContextData);
@@ -15,6 +24,7 @@ const Context = createContext<AuthContextData>({} as AuthContextData);
 const AuthContext: React.FC = ({ children }) => {
     const [authenticated, setAuthenticated] = useState(false)
     const [loading, setLoading] = useState(true)
+    const [user, setUser] = useState<User | null>()
 
     useEffect(() => {
         (async () => {
@@ -22,6 +32,8 @@ const AuthContext: React.FC = ({ children }) => {
 
         if (token) {
             api.defaults.headers.Authorization = `Bearer ${JSON.parse(token)}`;
+            const {data} = await api.get('user')
+            setUser(data)
             setAuthenticated(true)
         }
 
@@ -42,20 +54,25 @@ const AuthContext: React.FC = ({ children }) => {
 
         AsyncStorage.setItem('token', JSON.stringify(data.token));
         api.defaults.headers.Authorization = `Bearer ${data.token}`;
+
+        const {data: userData} = await api.get('user')
+        setUser(userData)
         setAuthenticated(true);
-        console.log(data.token)
+
+        console.log(user)
     }
 
     async function handleLogout() {
         setAuthenticated(false);
         AsyncStorage.clear()
+        setUser(null)
         api.defaults.headers.Authorization = undefined;
     }
 
-    if (loading) return null
+    if (loading || !user) return null
 
   return (
-      <Context.Provider value={{ authenticated, handleLogin, loading, handleLogout }}>
+      <Context.Provider value={{ authenticated, handleLogin, loading, handleLogout, user }}>
           {children}
       </Context.Provider>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Container,
   NameContainer,
@@ -14,7 +14,9 @@ import { Container,
   DogImage,
   KeyboardView,
   Button,
-  ButtonText, } from './styles';
+  ButtonText,
+  DisabledButton,
+  DisabledButtonText, } from './styles';
 
 import dogImg from '../../assets/icons/dog.png'
 import api from '../../services/api';
@@ -29,11 +31,29 @@ const CreateUser: React.FC = () => {
   const [whatsapp, setWhatsapp] = useState('')
   const [city, setCity] = useState('')
   const [loading, setLoading] = useState(false)
+  const [disabled, setDisabled] = useState(false)
 
   const {navigate} = useNavigation()
 
+  useEffect(() => {
+    if (name && second_name && email && password && whatsapp && city) {
+      setDisabled(false)
+    } else {
+      setDisabled(true)
+    }
+  }, [
+    name,
+    second_name,
+    email,
+    password,
+    whatsapp,
+    city,
+  ])
+
+
   async function handleCreate() {
     setLoading(true)
+    setDisabled(true)
 
     await api.post('register', {
       name,
@@ -44,6 +64,7 @@ const CreateUser: React.FC = () => {
       city
     })
 
+    setDisabled(false)
     setLoading(false)
     navigate('AuthUser')
   }
@@ -86,9 +107,15 @@ const CreateUser: React.FC = () => {
           <City value={city} onChangeText={setCity} autoCapitalize='words' placeholder='Cidade' />
         </InfoContainer>
 
-        <Button onPress={handleCreate}>
-          {loading ? <ActivityIndicator color='#fff' size={30} /> : <ButtonText>Cadastrar</ButtonText>}
-        </Button>
+        {disabled ? (
+          <DisabledButton >
+            {loading ? <ActivityIndicator color='#fff' size={30} /> : <DisabledButtonText>Cadastrar</DisabledButtonText>}
+          </DisabledButton>
+        ) : (
+          <Button onPress={handleCreate}>
+            {loading ? <ActivityIndicator color='#fff' size={30} /> : <ButtonText>Cadastrar</ButtonText>}
+          </Button>
+        )}
       </KeyboardView>
     </>
   );
