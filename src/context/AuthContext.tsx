@@ -69,7 +69,7 @@ const AuthContext: React.FC = ({ children }) => {
         api.defaults.headers.Authorization = undefined;
     }
 
-    if (loading || !user) return null
+    if (loading) return null
 
   return (
       <Context.Provider value={{ authenticated, handleLogin, loading, handleLogout, user }}>

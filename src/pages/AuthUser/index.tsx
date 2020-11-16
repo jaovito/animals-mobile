@@ -6,7 +6,6 @@ import {Context} from '../../context/AuthContext'
 import { Container, Title, Email, Password, InputView, AccountOptions, CreateAccount, ButtonSubmitTrue, ButtonTextTrue, ButtonSubmitFalse } from './styles';
 import Background from '../../components/Background'
 import { TouchableOpacity } from 'react-native';
-import { DisabledButton } from '../CreateAnimal/styles';
 
 const AuthUser: React.FC = () => {
   const [email, setEmail] = useState('')

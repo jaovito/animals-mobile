@@ -2,6 +2,7 @@ import styled from 'styled-components/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { RectButton } from 'react-native-gesture-handler';
 import { Dimensions } from 'react-native';
+import { MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons'; 
 
 
 export const Container = styled(LinearGradient)`
@@ -149,4 +150,98 @@ export const ImagesContainer = styled.ScrollView`
     border-top-right-radius: 8px;
     border-bottom-right-radius: 0px;
     border-bottom-left-radius: 0px;
+`
+
+export const Menu = styled(MaterialCommunityIcons)`
+    font-size: 24px;
+    color: #000;
+
+    align-self: flex-end;
+`
+
+export const ContainerModal = styled.View`
+    flex: 1;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+
+    align-self: center;
+    justify-content: center;
+`
+
+export const Modal = styled.Modal`
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto;
+
+`
+
+export const ModalCard = styled.View`
+    position: relative;
+    top: 20%;
+
+    align-self: center;
+    background-color: #e5e5e5;
+    
+    width: 90%;
+    min-height: 50%;
+
+    border-radius: 8px;
+    border-width: 6px;
+    border-color: #3339;
+    padding: 5%;
+`
+export const ModalHeader = styled.View`
+    flex-direction: row;
+    justify-content: space-between;
+`
+
+export const ModalTitle = styled.Text`
+    font-size: 30px;
+    font-family: 'Poppins_700Bold';
+    color: #444;
+`
+
+export const CloseModal = styled(FontAwesome)`
+    font-size: 30px;
+    color: rgba(160, 0, 0, 0.65);
+`
+
+export const DeleteButton = styled(RectButton)`
+    width: 90%;
+    background-color: rgba(160, 0, 0, 0.65);
+
+    align-self: center;
+    margin-top: 10%;
+
+    padding: 5%;
+
+    border-radius: 8px;
+`
+
+export const DeleteText = styled.Text`
+    font-size: 20px;
+    font-family: 'Poppins_400Regular';
+    color: #FFF;
+`
+export const DonateButton = styled(RectButton)`
+    width: 90%;
+    background-color: rgba(0, 160, 16, 0.65);
+
+    align-self: center;
+    margin-top: 10%;
+
+    padding: 5%;
+
+    border-radius: 8px;
 `
