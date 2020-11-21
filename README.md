@@ -1,4 +1,5 @@
-<h1 align="center">Animals é um projeto focado na adoção de animais, onde se pode publicar e visualizar seus animais e de outras pessoas, podendo entrar em contato para adoção, além de poder deletar ou definir como adotado seu próprio bixinho.</h1> 
+# Animals
+Animals é um projeto focado na adoção de animais, onde se pode publicar e visualizar seus animais e de outras pessoas, podendo entrar em contato para adoção, além de poder deletar ou definir como adotado seu próprio bixinho.
 
 ## 🚀 Tecnologias
 
