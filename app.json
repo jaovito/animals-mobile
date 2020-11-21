@@ -1,5 +1,8 @@
 {
   "expo": {
+    "experiments": {
+      "turboModules": true
+    },
     "name": "Animals",
     "slug": "Animals",
     "version": "1.2.0",

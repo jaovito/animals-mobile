@@ -13,14 +13,10 @@ import {
     TextContainer,
     AnimalImg,
     AnimalName,
-    Description,
-    City,
     ViewMore,
     ViewTitle,
-    CityDescription,
     ImagesContainer,
     Header,
-    LogOut,
     Loading
  } from './styles';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
@@ -38,7 +34,7 @@ interface Animals {
     ]
 }
 
-const Adopted: React.FC = () => {
+const MyAnimals: React.FC = () => {
     const [cards, setCards] = useState<Animals[] | null>();
     const [loading, setLoading] = useState(false);
 
@@ -47,7 +43,7 @@ const Adopted: React.FC = () => {
     useFocusEffect(
         useCallback(() => {
             setLoading(true);
-            api.get('adopted').then(response => {
+            api.get('animal').then(response => {
                 setCards(response.data);
             }).catch(err => {
                 alert(err)
@@ -82,13 +78,6 @@ const Adopted: React.FC = () => {
         <Title>
             Animais doados.
         </Title>
-
-        <LogOut style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-        }} onPress={handleLogout}>
-            <Feather name='log-out' size={34} color='#FFF' />
-        </LogOut>
         </Header>
         <SubTitle>Fique a vontade para procurar!</SubTitle>
       <Loading size={50} color="#fff" />
@@ -112,54 +101,44 @@ const Adopted: React.FC = () => {
 
         <Background source={backgroundImg}>
             <Header>
-            <Title>
-            Animais doados.
-            </Title>
-  
-            <LogOut style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-            }} onPress={handleLogout}>
-                <Feather name='log-out' size={34} color='#FFF' />
-            </LogOut>
+                <Title>
+                Meus Animais
+                </Title>
+                <SubTitle>Todos seus animais apareceram abaixo!</SubTitle>
             </Header>
-            <SubTitle>Fique a vontade para procurar!</SubTitle>
         
             {loading ? (
           <Loading size={50} color="#fff" />
             ) : (
             <Content contentContainerStyle={{
-                alignItems: 'center',
-                justifyContent: 'center',
+                justifyContent: 'space-around',
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                alignSelf: 'flex-start',
             }}>
+               
                 {cards.map(card => (
                     <Card key={card.id}>
-                    <ImagesContainer horizontal pagingEnabled>
-                        {card.images.map(img => (
-                            <AnimalImg
-                            key={img.id}
-                             source={{
-                                uri: img.url
-                            }} />
-                            )
-                        )
-                        }
-                    </ImagesContainer>
-                    <TextContainer>
-                        <AnimalName>{card.name}</AnimalName>
-                        <Description>{card.description}</Description>
-                        <CityDescription>Cidade: <City>{card.citie}</City></CityDescription>
-                        <Description>Raça: <City>{card.breed}</City></Description>
-                    </TextContainer>
-                    
-                    <ViewMore onPress={() => {
-                        navigate('AnimalInfo', {id: card.id})
-                    }}>
-                        <ViewTitle>Ver mais</ViewTitle>
-                        <Feather name="arrow-right" size={24} color="#9871F5" />
-                    </ViewMore>
-                </Card>
+                        <ImagesContainer horizontal pagingEnabled>
+                                <AnimalImg
+                                    source={{
+                                        uri: card.images[0].url
+                                    }} 
+                                />
+                        </ImagesContainer>
+                        <TextContainer>
+                            <AnimalName>{card.name}</AnimalName>
+                        </TextContainer>
+                        
+                        <ViewMore onPress={() => {
+                            navigate('MyAnimalInfo', {id: card.id})
+                        }}>
+                            <ViewTitle>Ver mais</ViewTitle>
+                            <Feather name="arrow-right" size={24} color="#9871F5" />
+                        </ViewMore>
+                    </Card>
                 ))}
+            
             </Content>
             )}
         </Background>
@@ -168,4 +147,4 @@ const Adopted: React.FC = () => {
   );
 }
 
-export default Adopted;
+export default MyAnimals;

@@ -6,6 +6,7 @@ import { MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons'
 import AppRoutes from './App.routes'
 import UserData from './pages/UserData'
 import Adopted from './pages/Adopted'
+import MyAnimals from './pages/MyAnimals'
 
 const { Navigator, Screen } = createBottomTabNavigator()
 
@@ -26,12 +27,14 @@ const DrawerRoute: React.FC = () => {
             iconStyle: {
                 flex: 0,
                 width: 20,
-                height: 20
+                height: 20,
+                marginLeft: 15,
             },
             labelStyle: {
                 fontFamily: 'Archivo_700Bold',
                 fontSize: 13,
-                marginLeft: 16,
+                marginLeft: 3,
+                marginRight: 15,
             },
             inactiveBackgroundColor: '#fafafc',
             activeBackgroundColor: '#ebebf5',
@@ -63,6 +66,15 @@ const DrawerRoute: React.FC = () => {
             options={{
                 tabBarLabel: 'Já doados',
                 tabBarIcon: ({size, color, focused}) => <MaterialCommunityIcons name='dog-service' size={size} color={ focused ? '#f08915' : color } />
+            }}
+          />
+
+          <Screen 
+            name='MyAnimals' 
+            component={MyAnimals} 
+            options={{
+                tabBarLabel: 'Meus animais',
+                tabBarIcon: ({size, color, focused}) => <MaterialCommunityIcons name='cat' size={size} color={ focused ? '#f08915' : color } />
             }}
           />
       </Navigator>

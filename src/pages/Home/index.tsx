@@ -143,7 +143,6 @@ const Home: React.FC = () => {
                 justifyContent: 'center',
             }}>
                 {cards.map(card => (
-                    <>
                         <Card key={card.id}>
                             <ImagesContainer horizontal pagingEnabled>
                                 {card.images.map(img => (
@@ -157,15 +156,6 @@ const Home: React.FC = () => {
                                 }
                             </ImagesContainer>
                             <TextContainer>
-                                {user?.id === card.user_id ? 
-                                (
-                                    <TouchableOpacity onPress={() => {
-                                        setVisible(!visible)
-                                        setItemId(card.id)
-                                    }}>
-                                        <Menu name="dots-horizontal" />
-                                    </TouchableOpacity>
-                                ) : null}
                                 <AnimalName>{card.name}</AnimalName>
                                 <Description>{card.description}</Description>
                                 <CityDescription>Cidade: <City>{card.citie}</City></CityDescription>
@@ -179,39 +169,6 @@ const Home: React.FC = () => {
                                 <Feather name="arrow-right" size={24} color="#9871F5" />
                             </ViewMore>
                         </Card>
-
-                        <Modal
-                        animationType="slide"
-                        transparent={true}
-                        visible={visible}
-                        >
-                        <ModalCard>
-                            <ModalHeader>
-                                <ModalTitle>Opções</ModalTitle>
-                                <TouchableOpacity onPress={() => setVisible(!visible)}>
-                                    <CloseModal name="close" />
-                                </TouchableOpacity>
-                            </ModalHeader>
-
-                            <DeleteButton onPress={() => {}}>
-                                <DeleteText>Apagar publicação</DeleteText>
-                            </DeleteButton>
-
-                            <DonateButton onPress={() => {
-                                console.log(card.id)
-                                api.put(`animals/${card.id}`, {
-                                    "adopted": true
-                                }).then(() => {
-                                    setVisible(!visible)
-                                })
-                                
-                            }}>
-                                <DeleteText>Alterar status para doado</DeleteText>
-                            </DonateButton>
-                        </ModalCard>
-
-                        </Modal>
-                </>
                 ))}
             </Content>
             )}
