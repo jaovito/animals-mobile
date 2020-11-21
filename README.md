@@ -12,7 +12,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 ## Backend
 O [backend](https://github.com/jaovito/animals-backend) foi publicado separadamente e desenvolvido com adonis
 
-## Installation
+## Instalação
 Foi utilizado [expo-cli](https://docs.expo.io) para fazer esta apliação mobile.
 
 ```bash
