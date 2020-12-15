@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
 
 import { Container, ImagesContainer, Image, DetailsContainer, Description, Title, ContactButton, ContactButtonText, City, ReasonAdoptionTitle, ReasonAdoption, Breed, Adoption, Adopted, DescriptionTitle, Modal, ModalCard, ModalHeader, ModalTitle, CloseModal, DeleteButton, DeleteText, DonateButton } from './styles';
 import api from '../../services/api';
 import { useRoute } from '@react-navigation/native';
-import { TouchableOpacity, Animated, ViewStyle } from 'react-native';
+import { TouchableOpacity, Animated } from 'react-native';
 
 interface Route {
   id: number;

@@ -1,7 +1,6 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import backgroundImg from '../../assets/icons/Cat.png'
 import { Feather } from '@expo/vector-icons'; 
-import {Context} from '../../context/AuthContext';
 
 import { 
     Container,
@@ -37,8 +36,6 @@ interface Animals {
 const MyAnimals: React.FC = () => {
     const [cards, setCards] = useState<Animals[] | null>();
     const [loading, setLoading] = useState(false);
-
-    const {handleLogout} = useContext(Context)
 
     useFocusEffect(
         useCallback(() => {

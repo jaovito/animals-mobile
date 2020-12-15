@@ -1,5 +1,6 @@
 import styled from 'styled-components/native'
 import { LinearGradient } from 'expo-linear-gradient';
+import {Picker} from '@react-native-community/picker';
 
 
 export const KeyboardView = styled.ScrollView`
@@ -114,23 +115,35 @@ export const InfoContainer = styled.View`
 `
 
 export const Whatsapp = styled.TextInput`
-  flex: 2;
+  margin-top: 5%;
+
   background-color: #eee;
   height: 50px;
 
-  text-align: center;
+  width: 80%;
+  border-radius: 8px;
+  padding-left: 10px;
+`
+
+export const Uf = styled.View`
+  flex: 2;
+  background-color: #eee;
+  height: 50px;
   margin-right: 5%;
-  border-radius: 8px
+
+  text-align: center;
+  border-radius: 8px;
 `
 
-export const City = styled.TextInput`
+export const City = styled.View`
   flex: 2;
   background-color: #eee;
   height: 50px;
 
   text-align: center;
-  border-radius: 8px
+  border-radius: 8px;
 `
+
 export const Button = styled.TouchableOpacity`
   background-color: #1C9209;
   width: 80%;
@@ -165,4 +178,11 @@ export const DisabledButtonText = styled.Text`
   font-size: 21px;
   color: #EEE;
   font-family: 'Poppins_700Bold'
+`
+
+export const SelectPicker = styled(Picker)`
+  width: 100%;
+  height: 50px;
+
+  text-align: center;
 `

@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import backgroundImg from '../../assets/icons/Cat.png'
 import { Feather } from '@expo/vector-icons'; 
 import {Context} from '../../context/AuthContext';
@@ -7,7 +7,6 @@ import {
     Container,
     Background,
     Title,
-    SubTitle,
     Content,
     Name,
     SecondName,

@@ -44,15 +44,6 @@ export const Title = styled.Text`
 
     margin-left: 5%;
 `
-
-export const SubTitle = styled.Text`
-    color: #EEE;
-    font-size: 20px;
-    font-family: 'Archivo_400Regular';
-    align-self: flex-start;
-
-    margin-left: 5%;
-`
 export const Content = styled.ScrollView`
     margin-top: 20%;
     flex: 1;

@@ -1,7 +1,6 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import backgroundImg from '../../assets/icons/Cat.png'
 import { Feather } from '@expo/vector-icons'; 
-import {Context} from '../../context/AuthContext';
 
 import { 
     Container,
@@ -22,18 +21,9 @@ import {
     ImagesContainer,
     Header,
     Loading,
-    Menu,
-    Modal,
-    ModalCard,
-    ModalTitle,
-    ModalHeader,
-    CloseModal,
-    DeleteButton,
-    DeleteText,
-    DonateButton
+
  } from './styles';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { TouchableOpacity } from 'react-native';
 import api from '../../services/api';
 
 interface Animals {
@@ -51,10 +41,6 @@ interface Animals {
 const Home: React.FC = () => {
     const [cards, setCards] = useState<Animals[] | null>();
     const [loading, setLoading] = useState(false);
-    const [visible, setVisible] = useState(false);
-    const [itemId, setItemId] = useState<number | null>();
-
-    const {user} = useContext(Context)
 
     useFocusEffect(
         useCallback(() => {
@@ -74,17 +60,6 @@ const Home: React.FC = () => {
 
     function handleGoCreate() {
         navigate('CreateAnimal')
-    }
-
-    async function handleDonate() {
-        console.log(itemId)
-        await api.put(`animals/${itemId}`, {
-            adopted: true
-        })
-    }
-
-    async function handleDelete() {
-        await api.delete(`animals/${itemId}`)
     }
 
     if (!cards) return (
