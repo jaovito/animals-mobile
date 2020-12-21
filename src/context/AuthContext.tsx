@@ -48,9 +48,10 @@ const AuthContext: React.FC = ({ children }) => {
         }).catch(err => {
             Alert.alert(
                 "Alert Title",
-                err
+                `erro: ${err}`
               );
         }) as any
+        console.log(data)
 
         AsyncStorage.setItem('token', JSON.stringify(data.token));
         api.defaults.headers.Authorization = `Bearer ${data.token}`;

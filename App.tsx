@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import IndexRoutes from './src/index.routes';
 import {AuthContext} from './src/context/AuthContext'
 
-import { AppLoading } from 'expo';
+import AppLoading from 'expo-app-loading';
 import {
   useFonts,
   Archivo_400Regular,

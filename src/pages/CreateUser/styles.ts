@@ -1,6 +1,7 @@
 import styled from 'styled-components/native'
 import { LinearGradient } from 'expo-linear-gradient';
 import {Picker} from '@react-native-community/picker';
+import { TextInputMask } from 'react-native-masked-text'
 
 
 export const KeyboardView = styled.ScrollView`
@@ -114,7 +115,18 @@ export const InfoContainer = styled.View`
   width: 80%;
 `
 
-export const Whatsapp = styled.TextInput`
+export const CPF = styled(TextInputMask)`
+  margin-top: 5%;
+
+  background-color: #eee;
+  height: 50px;
+
+  width: 80%;
+  border-radius: 8px;
+  padding-left: 10px;
+`
+
+export const Whatsapp = styled(TextInputMask)`
   margin-top: 5%;
 
   background-color: #eee;

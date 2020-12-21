@@ -21,7 +21,11 @@ import {
     ImagesContainer,
     Header,
     Loading,
-
+    ShimmerCard,
+    ShimmerAnimalImg,
+    ShimmerAnimalName,
+    ShimmerCityDescription,
+    ShimmerDescription,
  } from './styles';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import api from '../../services/api';
@@ -62,7 +66,7 @@ const Home: React.FC = () => {
         navigate('CreateAnimal')
     }
 
-    if (!cards) return (
+    if (!cards || loading) return (
         <>
         <Container colors={['#ED4D08', '#ED9108']}
         start={{
@@ -76,16 +80,67 @@ const Home: React.FC = () => {
       >
 
         <Background source={backgroundImg}>
-        <Header>
-        <Title>
-            Precisa de um amigo?
-        </Title>
+            <Header>
+            <Title>
+                Precisa de um amigo?
+            </Title>
+            </Header>
+            <SubTitle>Fique a vontade para procurar!</SubTitle>
+        
+            <Content contentContainerStyle={{
+                alignItems: 'center',
+                justifyContent: 'center',
+            }} >
+                <ShimmerCard>
+                    <ShimmerAnimalImg />
+                        <ShimmerAnimalName></ShimmerAnimalName>
+                        <ShimmerDescription></ShimmerDescription>
+                        <ShimmerCityDescription></ShimmerCityDescription>
+                        <ShimmerDescription></ShimmerDescription>
+                                
+                        <ViewMore onPress={() => {
+                        }}>
+                            <ViewTitle>Ver mais</ViewTitle>
+                            <Feather name="arrow-right" size={24} color="#9871F5" />
+                        </ViewMore>
+                </ShimmerCard>
 
-        </Header>
-        <SubTitle>Fique a vontade para procurar!</SubTitle>
-      <Loading size={50} color="#fff" />
-    </Background>
-    </Container>
+                <ShimmerCard>
+                    <ShimmerAnimalImg />
+                        <ShimmerAnimalName></ShimmerAnimalName>
+                        <ShimmerDescription></ShimmerDescription>
+                        <ShimmerCityDescription></ShimmerCityDescription>
+                        <ShimmerDescription></ShimmerDescription>
+                                
+                        <ViewMore onPress={() => {
+                        }}>
+                            <ViewTitle>Ver mais</ViewTitle>
+                            <Feather name="arrow-right" size={24} color="#9871F5" />
+                        </ViewMore>
+                </ShimmerCard>
+
+                <ShimmerCard>
+                    <ShimmerAnimalImg />
+                        <ShimmerAnimalName></ShimmerAnimalName>
+                        <ShimmerDescription></ShimmerDescription>
+                        <ShimmerCityDescription></ShimmerCityDescription>
+                        <ShimmerDescription></ShimmerDescription>
+                                
+                        <ViewMore onPress={() => {
+                        }}>
+                            <ViewTitle>Ver mais</ViewTitle>
+                            <Feather name="arrow-right" size={24} color="#9871F5" />
+                        </ViewMore>
+                </ShimmerCard>
+            </Content>
+
+            <AddButton onPress={handleGoCreate} >
+                <Feather name="plus" size={34} color="#FFF" />
+            </AddButton>
+        </Background>
+
+            
+      </Container>
     </>
     )
 

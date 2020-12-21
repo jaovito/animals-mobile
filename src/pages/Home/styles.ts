@@ -3,6 +3,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { RectButton } from 'react-native-gesture-handler';
 import { Dimensions } from 'react-native';
 import { MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons'; 
+import ShimmerPlaceHolder from 'react-native-shimmer-placeholder'
 
 
 export const Container = styled(LinearGradient)`
@@ -13,7 +14,6 @@ export const Container = styled(LinearGradient)`
 
 export const Loading = styled.ActivityIndicator`
 `
-
 export const Background = styled.ImageBackground`
     flex: 1;
     width: 100%;
@@ -170,4 +170,40 @@ export const ContainerModal = styled.View`
 
     align-self: center;
     justify-content: center;
+`
+
+export const ShimmerCard = styled.View`
+    background-color: #FFF;
+    border-radius: 8px;
+
+    width: 90%;
+
+    margin-top: 5%;
+`
+export const ShimmerAnimalImg = styled(ShimmerPlaceHolder)`
+    width: ${Dimensions.get('window').width -39}px;
+    height: ${Dimensions.get('window').width -80}px;
+    resizeMode: cover;
+
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    margin-bottom: 5%;
+`
+
+export const ShimmerAnimalName = styled(ShimmerPlaceHolder)`
+    width: 40%;
+    height: 40px;
+    margin-bottom: 30px;
+`
+
+export const ShimmerDescription = styled(ShimmerPlaceHolder)`
+    width: 70%;
+    margin-bottom: 10px;
+`
+
+export const ShimmerCityDescription = styled(ShimmerPlaceHolder)`
+    width: 50%;
+    margin-bottom: 10px;
 `
