@@ -88,13 +88,26 @@ export const Whatsapp = styled.TextInput`
     text-align: center;
     justify-content: center;
 
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: 'Archivo_700Bold'
+`
+
+export const UF = styled.View`
+    width: 99%;
+    height: 50px;
+    background-color: #EEE;
+
+    text-align: center;
+    justify-content: center;
+
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
     font-size: 16px;
     font-family: 'Archivo_700Bold'
 `
 
-export const City = styled.TextInput`
+export const City = styled.View`
     width: 99%;
     height: 50px;
     background-color: #EEE;
@@ -119,7 +132,7 @@ export const Row = styled.View`
 `
 
 export const TextContainer = styled.View`
-    width: 100%;
+    width: 80%;
     flex: 1;
 `
 

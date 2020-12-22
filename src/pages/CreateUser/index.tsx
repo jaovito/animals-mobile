@@ -162,18 +162,18 @@ const CreateUser: React.FC = () => {
     await api.post('register', {
       name,
       second_name,
-      whatsapp: noTabWhatsapp,
+      whatsapp: `55${noTabWhatsapp}`,
       email,
       password,
       city: `${cityUfValue}`,
       cpf: cleanCpf,
     }).catch(err => {
-      alert('Erro ao se cadastrar')
+      Alert.alert('Erro ao se cadastrar, verifique os dados e tente novamente', `erro: ${err}`)
     })
 
     setDisabled(false)
     setLoading(false)
-    navigate('AuthUser')
+    navigate('SuccessUser')
   }
 
   return (
@@ -232,7 +232,7 @@ const CreateUser: React.FC = () => {
             <SelectPicker
             selectedValue={uf}
             onValueChange={itemValue => setUf(String(itemValue))}>
-              <SelectPicker.Item label="Selecione uma cidade" value="" />
+              <SelectPicker.Item label="Selecione um Estado" value="" />
               {city.map(item => (
                 <SelectPicker.Item key={item.id} label={item.nome} value={item.sigla} />
               ))}

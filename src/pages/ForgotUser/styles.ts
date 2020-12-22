@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { RectButton } from 'react-native-gesture-handler';
 
 
 export const Container = styled(LinearGradient)`
@@ -51,7 +52,7 @@ export const Email = styled.TextInput`
     padding: 10px;
 `
 
-export const Button = styled.TouchableOpacity`
+export const Button = styled(RectButton)`
     background-color: #1C9209;
     width: 90%;
     height: 50px;

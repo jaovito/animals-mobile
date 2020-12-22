@@ -1,5 +1,6 @@
 import styled from 'styled-components/native'
 import { LinearGradient } from 'expo-linear-gradient';
+import { RectButton } from 'react-native-gesture-handler'
 
 
 export const Container = styled(LinearGradient)`
@@ -23,17 +24,17 @@ export const Title = styled.Text`
 
 export const SubTitle = styled.Text`
   color: #FFF;
-  font-family: 'Poppins_500Regular';
+  font-family: 'Poppins_400Regular';
   font-size: 21px;
-
   max-width: 80%;
+
   text-align: center;
   line-height: 25px;
 
   z-index: 10;
 `
 
-export const ButtonSubmitTrue = styled.TouchableOpacity`
+export const ButtonSubmitTrue = styled(RectButton)`
   width: 90%;
   height: 61px;
 

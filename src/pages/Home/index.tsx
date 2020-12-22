@@ -56,7 +56,7 @@ const Home: React.FC = () => {
             });
             
             setLoading(false);
-            return () => setCards(null)
+            // return () => setCards(null)
          }, [])
     )
     

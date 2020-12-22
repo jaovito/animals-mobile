@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Container, Title, SubTitle, ButtonSubmitTrue, ButtonTextTrue } from './styles';
 import Background from '../../components/Background'
 
-const Success: React.FC = () => {
+const SuccessUserCreate: React.FC = () => {
 
   const {navigate} = useNavigation()
 
@@ -25,7 +25,7 @@ const Success: React.FC = () => {
       }}
     >
       <Background>
-        <Title>Senha alterada com sucesso!</Title>
+        <Title>Conta criada com sucesso!</Title>
         <SubTitle>Agora é só entrar com seu e-mail e senha, fácil não? {'\n'} Clique no botão abaixo para fazer o login.</SubTitle>
        
           <ButtonSubmitTrue onPress={handleGoLogin}>
@@ -37,4 +37,4 @@ const Success: React.FC = () => {
   );
 }
 
-export default Success;
+export default SuccessUserCreate;

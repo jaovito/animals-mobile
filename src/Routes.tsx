@@ -6,6 +6,7 @@ import CreateUser from './pages/CreateUser'
 import ForgotUser from './pages/ForgotUser'
 import ResetPassword from './pages/ResetPassword'
 import Success from './pages/Success'
+import SuccessUserCreate from './pages/SuccessUserCreate'
 
 const {Navigator, Screen} = createStackNavigator()
 
@@ -20,6 +21,7 @@ const Routes: React.FC = () => {
         <Screen name='ForgotUser' component={ForgotUser} />
         <Screen name='ResetPassword' component={ResetPassword} />
         <Screen name='Success' component={Success} />
+        <Screen name='SuccessUser' component={SuccessUserCreate} />
       </Navigator>
   );
 }

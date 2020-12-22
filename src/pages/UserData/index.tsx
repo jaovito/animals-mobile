@@ -1,7 +1,9 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import backgroundImg from '../../assets/icons/Cat.png'
 import { Feather } from '@expo/vector-icons'; 
 import {Context} from '../../context/AuthContext';
+import {Picker} from '@react-native-community/picker';
+
 
 import { 
     Container,
@@ -20,28 +22,38 @@ import {
     Label,
     Button,
     ButtonText,
+    UF
  } from './styles';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import api from '../../services/api';
+import axios from 'axios';
+import { Alert } from 'react-native';
 
-interface Animals {
+interface UF {
     id: number;
-    user_id: number;
-    name: string;
-    description: string;
-    breed: string;
-    citie: string;
-    images: [
-        {id: number, url: string, path: string},
-    ]
+    nome: string;
+    sigla: string;
 }
+
+interface City {
+    id: number;
+    nome: string;
+    microrregiao: {
+      id: number;
+      nome: string;
+      mesoregiao: {};
+    };
+  }
 
 const UserData: React.FC = () => {
     const [loading, setLoading] = useState(false);
     const [name, setName] = useState('');
     const [second_name, setSecondName] = useState('');
     const [whatsapp, setWhatsapp] = useState('');
-    const [city, setCity] = useState('');
+    const [uf, setUf] = useState<UF []>([]);
+    const [ufValue, setUfValue] = useState('');
+    const [city, setCity] = useState<City []>([]);
+    const [cityValue, setCityValue] = useState('');
 
     const { handleLogout } = useContext(Context)
 
@@ -53,12 +65,23 @@ const UserData: React.FC = () => {
                 setName(response.data.name);
                 setSecondName(response.data.second_name);
                 setWhatsapp(response.data.whatsapp);
-                setCity(response.data.city);
             })
             
             setLoading(false);
          }, [])
     )
+
+    useEffect(() => {
+        axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
+            .then(response => setUf(response.data))
+            .catch(err => Alert.alert('Erro ao obter Estados', `erro: ${err}`))
+
+        if(ufValue) {
+            axios.get(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${ufValue}/municipios`)
+                .then(response => setCity(response.data))
+                .catch(err => Alert.alert('Erro ao obter cidades', `erro: ${err}`))
+        }
+    }, [ufValue])
     
     const {navigate} = useNavigation()
 
@@ -72,7 +95,7 @@ const UserData: React.FC = () => {
             name,
             second_name,
             whatsapp,
-            city
+            city: cityValue
         })
         setLoading(false);
     }
@@ -130,7 +153,6 @@ const UserData: React.FC = () => {
                     </TextContainer>
                 </Row>
 
-                <Row>
                     <TextContainer>
                         <Label>Whatsapp</Label>
                         <Whatsapp 
@@ -139,14 +161,36 @@ const UserData: React.FC = () => {
                             onChangeText={setWhatsapp} 
                         />
                     </TextContainer>
+
+                <Row>
+                    <TextContainer>
+                        <Label>UF</Label>
+                        <UF >
+                            <Picker
+                              selectedValue={ufValue}
+                              onValueChange={itemValue => setUfValue(String(itemValue))}
+                            >
+                                <Picker.Item label='Selecione um Estado' value='' />
+                                {uf.map(ufItem => (
+                                    <Picker.Item key={ufItem.id} label={ufItem.nome} value={ufItem.sigla} />
+                                ))}
+                            </Picker>
+                        </UF>
+                    </TextContainer>
                     
                     <TextContainer>
                         <Label>Cidade</Label>
-                        <City 
-                            placeholder="Falou" 
-                            value={city} 
-                            onChangeText={setCity} 
-                        />
+                        <City >
+                            <Picker
+                             selectedValue={cityValue}
+                             onValueChange={itemValue => setCityValue(String(itemValue))}
+                            >
+                                <Picker.Item label='Selecione uma cidade' value='' />
+                                {city.map(cityItem => (
+                                    <Picker.Item key={cityItem.id} label={cityItem.nome} value={cityItem.nome} />
+                                ))}
+                            </Picker>
+                        </City>
                     </TextContainer>
                 </Row>
             

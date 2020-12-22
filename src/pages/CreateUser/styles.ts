@@ -2,6 +2,7 @@ import styled from 'styled-components/native'
 import { LinearGradient } from 'expo-linear-gradient';
 import {Picker} from '@react-native-community/picker';
 import { TextInputMask } from 'react-native-masked-text'
+import { RectButton } from 'react-native-gesture-handler';
 
 
 export const KeyboardView = styled.ScrollView`
@@ -156,7 +157,7 @@ export const City = styled.View`
   border-radius: 8px;
 `
 
-export const Button = styled.TouchableOpacity`
+export const Button = styled(RectButton)`
   background-color: #1C9209;
   width: 80%;
   height: 50px;

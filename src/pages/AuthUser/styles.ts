@@ -1,9 +1,26 @@
 import styled from 'styled-components/native'
 import { LinearGradient } from 'expo-linear-gradient';
+import {Animated} from 'react-native'
+import { RectButton } from 'react-native-gesture-handler';
 
+export const Image = styled(Animated.Image)`
+  width: 90%;
+  height: 15%;
+  resize-mode: contain;
+
+  z-index: 1;
+`
 
 export const Container = styled(LinearGradient)`
   flex: 1;
+  align-items: center;
+  justify-content: center;
+`
+
+export const Form = styled(Animated.View)`
+  width: 100%;
+  height: auto;
+
   align-items: center;
   justify-content: center;
 `
@@ -67,7 +84,7 @@ export const CreateAccount = styled.Text`
   text-decoration: underline;
 `
 
-export const ButtonSubmitTrue = styled.TouchableOpacity`
+export const ButtonSubmitTrue = styled(RectButton)`
   width: 90%;
   height: 61px;
 

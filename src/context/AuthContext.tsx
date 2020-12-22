@@ -16,7 +16,7 @@ interface AuthContextData {
     handleLogin(email: string, password: string): Promise<void>;
     loading: boolean;
     handleLogout(): void
-    user: User | null
+    user: User | null | undefined;
 }
 
 const Context = createContext<AuthContextData>({} as AuthContextData);
@@ -47,7 +47,7 @@ const AuthContext: React.FC = ({ children }) => {
             password,
         }).catch(err => {
             Alert.alert(
-                "Alert Title",
+                "Dados incorretos, verifique seus dados e tente novamente.",
                 `erro: ${err}`
               );
         }) as any
