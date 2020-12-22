@@ -3,9 +3,27 @@ import {ActivityIndicator} from 'react-native'
 
 import { useNavigation } from '@react-navigation/native';
 import {Feather} from '@expo/vector-icons'
-import { Container, ImagesInput, Input, Label, Title, UploadedImage, UploadedImagesContainer, Background, NextButton, NextButtonText, DisabledButton } from './styles';
+import { Container, ImagesInput, Input, Label, Title, UploadedImage, UploadedImagesContainer, Background, NextButton, NextButtonText, DisabledButton, MaskedInput, UF, City, SelectPicker } from './styles';
 import api from '../../services/api';
 import * as ImagePicker from 'expo-image-picker';
+import axios from 'axios';
+
+interface Uf {
+    id: number;
+    nome: string;
+    sigla: string;
+  }
+  
+  interface City {
+    id: number;
+    nome: string;
+    microrregiao: {
+      id: number;
+      nome: string;
+      mesoregiao: {};
+    };
+  }
+  
 
 const CreateAnimal: React.FC = () => {
     const [name, setName] = useState('')
@@ -18,9 +36,22 @@ const CreateAnimal: React.FC = () => {
     const [images, setImages] = useState<string[]>([])
     const [disabled, setDisabled] = useState(true)
 
+    const [ufs, setUfs] = useState<Uf []>([]);
+    const [cities, setCities] = useState<City []>([]);
+
     const [loading, setLoading] = useState(false)
 
     const {navigate} = useNavigation()
+
+    useEffect(() => {
+        axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
+            .then(response => setUfs(response.data))
+        
+        if (uf) {
+          axios.get(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/municipios`)
+            .then(response => setCities(response.data))
+        }
+    }, [uf])
 
     useEffect(() => {
         if (name && description && contact && reason_adoption && breed && citie && images.length > 0) {
@@ -37,6 +68,11 @@ const CreateAnimal: React.FC = () => {
     async function handleCreateAnimal() {
         setLoading(true)
 
+        const whatsappValue = contact.replace('(', '')
+        const cleanWhatsapp = whatsappValue.replace(')', '')
+        const noSpace = cleanWhatsapp.replace(' ', '')
+        const noTabWhatsapp = noSpace.replace('-', '')
+
         if (!name || !description || !contact || !reason_adoption || !breed || !citie || !images) {
             alert('Prencha todos os campos')
         } else {
@@ -44,7 +80,7 @@ const CreateAnimal: React.FC = () => {
             const {data} = await api.post('animals', {
                 name,
                 description,
-                contact,
+                contact: noTabWhatsapp,
                 reason_adoption,
                 breed,
                 citie,
@@ -111,15 +147,21 @@ const CreateAnimal: React.FC = () => {
             onChangeText={setDescription}
             multiline
             style={{height: 110}}
-            placeholder="Comportamento, idade, etc."
+            placeholder="Comportamento, idade, vacinação, se é castrado, etc."
         />
 
         <Label>Contato</Label>
-        <Input 
+        <MaskedInput 
+            type={'cel-phone'}
+            options={{
+                maskType: 'BRL',
+                withDDD: true,
+                dddMask: '(99) '
+            }}
             value={contact}
             keyboardType="numeric"
             onChangeText={setContact}
-            placeholder="Ex: 5500123456789" 
+            placeholder="Ex: (00) 91234-5678" 
         />
 
         <Label>Fotos</Label>
@@ -151,17 +193,30 @@ const CreateAnimal: React.FC = () => {
             onChangeText={setBreed}
         />
 
-        <Label>Cidade onde se encontra</Label>
-        <Input 
-            value={citie}
-            onChangeText={setCitie}
-        />
-
         <Label>Estado - UF</Label>
-        <Input 
-            value={uf}
-            onChangeText={setUf}
-        />
+        <UF>
+        <SelectPicker 
+            selectedValue={uf}
+            onValueChange={itemValue => setUf(String(itemValue))}
+        >
+            {ufs.map(uf => (
+                <SelectPicker.Item key={uf.id} label={uf.nome} value={uf.sigla} />
+            ))}
+        </SelectPicker>
+        </UF>
+
+        <Label>Cidade onde se encontra</Label>
+        <City>
+        <SelectPicker 
+            selectedValue={citie}
+            onValueChange={itemValue => setCitie(String(itemValue))}
+        >
+            {cities.map(city => (
+                <SelectPicker.Item key={city.id} label={city.nome} value={city.nome} />
+            ))}
+        </SelectPicker>
+        </City>
+
 
         {disabled ? (
             <DisabledButton>

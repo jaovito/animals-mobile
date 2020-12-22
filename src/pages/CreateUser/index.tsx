@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 
 import axios from 'axios';
@@ -28,6 +28,7 @@ import dogImg from '../../assets/icons/dog.png'
 import api from '../../services/api';
 import { useNavigation } from '@react-navigation/native';
 import { ActivityIndicator, Alert } from 'react-native';
+import { Animated } from 'react-native';
 
 interface Uf {
   id: number;
@@ -64,6 +65,49 @@ const CreateUser: React.FC = () => {
   const [alertCpf, setAlertsCpf] = useState(false)
 
   const {navigate, goBack} = useNavigation()
+
+  const leftAnimated = useRef(new Animated.Value(-200)).current
+  const leftCPFAnimated = useRef(new Animated.Value(-400)).current
+  const leftPasswordAnimated = useRef(new Animated.Value(-400)).current
+  const rightAnimated = useRef(new Animated.Value(200)).current
+  const rightEmailAnimated = useRef(new Animated.Value(400)).current
+  const rightWhatsappAnimated = useRef(new Animated.Value(400)).current
+
+  useEffect(() => {
+    Animated.sequence([
+      Animated.timing(leftAnimated, {
+        toValue: 0,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+      Animated.timing(rightAnimated, {
+        toValue: 0,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+      Animated.timing(leftCPFAnimated, {
+        toValue: 0,
+        duration: 400,
+        useNativeDriver: true,
+      }),
+      Animated.timing(rightEmailAnimated, {
+        toValue: 0,
+        duration: 400,
+        useNativeDriver: true,
+      }),
+      Animated.timing(leftPasswordAnimated, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: true,
+      }),
+      Animated.timing(rightWhatsappAnimated, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: true,
+      }),
+    ]).start()
+  }, [])
+
 
   async function CPFValidate(strCPF: string) {
     var Soma;
@@ -110,7 +154,6 @@ const CreateUser: React.FC = () => {
     return true;
 }
 
-  
   useEffect(() => {
     (async () => {
       setUfLoading(true)
@@ -198,30 +241,97 @@ const CreateUser: React.FC = () => {
         <DogImage source={dogImg} />
 
           <NameContainer>
-            <Name value={name} onChangeText={setName} placeholder='Nome' />
-            <SecondName value={second_name} onChangeText={setSecondName} placeholder='Sobrenome' />
+            <Animated.View 
+              style={{
+                flex: 1,
+                transform: [
+                  {translateX: leftAnimated}
+                ]
+              }}
+            >
+              <Name value={name} onChangeText={setName} placeholder='Nome' />
+            </Animated.View>
+            <Animated.View 
+              style={{
+                flex: 1,
+                transform: [
+                  {translateX: rightAnimated}
+                ]
+              }}
+            >
+              <SecondName value={second_name} onChangeText={setSecondName} placeholder='Sobrenome' />
+            </Animated.View>
           </NameContainer>
 
+          <Animated.View 
+            style={{
+              flex: 1,
+              width: '100%',
+              alignItems: 'center',
+              transform: [
+                {translateX: leftCPFAnimated}
+              ],
+            }}
+          >
           <CPF 
             type={'cpf'}
             value={cpf} onChangeText={setCpf}
             placeholder='CPF'
             keyboardType='numeric'
           />
-          <Email value={email} onChangeText={setEmail} autoCapitalize='none' keyboardType='email-address' textContentType='emailAddress' placeholder='E-mail' />
-          <Password value={password} onChangeText={setPassword} textContentType='password' secureTextEntry={true} placeholder='Senha' />
-
-          <Whatsapp 
-            type={'cel-phone'}
-            options={{
-              maskType: 'BRL',
-              withDDD: true,
-              dddMask: '(99) '
+          </Animated.View>
+          
+          <Animated.View
+            style={{
+              flex: 1,
+              width: '100%',
+              alignItems: 'center',
+              transform: [
+                {translateX: rightEmailAnimated}
+              ],
             }}
-            value={whatsapp} onChangeText={setWhatsapp}
-            placeholder='Whatsapp'
-            keyboardType='numeric'
-          />
+          >
+
+            <Email value={email} onChangeText={setEmail} autoCapitalize='none' keyboardType='email-address' textContentType='emailAddress' placeholder='E-mail' />
+          </Animated.View>
+
+          <Animated.View 
+            style={{
+              flex: 1,
+              width: '100%',
+              alignItems: 'center',
+              transform: [
+                {translateX: leftPasswordAnimated}
+              ],
+            }}
+          >
+
+            <Password value={password} onChangeText={setPassword} textContentType='password' secureTextEntry={true} placeholder='Senha' />
+          </Animated.View>
+
+          <Animated.View 
+            style={{
+              flex: 1,
+              width: '100%',
+              alignItems: 'center',
+              transform: [
+                {translateX: rightWhatsappAnimated}
+              ],
+            }}
+          >
+
+            <Whatsapp 
+              type={'cel-phone'}
+              options={{
+                maskType: 'BRL',
+                withDDD: true,
+                dddMask: '(99) '
+              }}
+              value={whatsapp} onChangeText={setWhatsapp}
+              placeholder='Whatsapp'
+              keyboardType='numeric'
+            />
+          </Animated.View>
 
         {ufLoading ? <ActivityIndicator style={{
           marginTop: 10,

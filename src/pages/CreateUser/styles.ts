@@ -3,6 +3,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import {Picker} from '@react-native-community/picker';
 import { TextInputMask } from 'react-native-masked-text'
 import { RectButton } from 'react-native-gesture-handler';
+import { Animated } from 'react-native';
 
 
 export const KeyboardView = styled.ScrollView`
@@ -118,7 +119,6 @@ export const InfoContainer = styled.View`
 
 export const CPF = styled(TextInputMask)`
   margin-top: 5%;
-
   background-color: #eee;
   height: 50px;
 

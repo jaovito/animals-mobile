@@ -1,6 +1,8 @@
 import { RectButton } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { TextInputMask } from 'react-native-masked-text';
+import { Picker } from '@react-native-community/picker';
 
 
 export const Background = styled(LinearGradient)`
@@ -41,6 +43,44 @@ export const Input = styled.TextInput`
     padding-horizontal: 24px;
     margin-bottom: 16px;
     text-align-vertical: top;
+`
+
+export const MaskedInput = styled(TextInputMask)`
+    background-color: #fff;
+    border-width: 1.4px;
+    border-color: #d3e2e6;
+    border-radius: 20px;
+    height: 56px;
+    padding-vertical: 18px;
+    padding-horizontal: 24px;
+    margin-bottom: 16px;
+    text-align-vertical: top;
+`
+
+export const UF = styled.View`
+        background-color: #fff;
+        border-width: 1.4px;
+        border-color: #d3e2e6;
+        border-radius: 20px;
+        margin-bottom: 16px;
+`
+
+export const City = styled.View`
+        background-color: #fff;
+        border-width: 1.4px;
+        border-color: #d3e2e6;
+        border-radius: 20px;
+        margin-bottom: 16px;
+`
+
+export const SelectPicker = styled(Picker)`
+        height: 56px;
+        padding-vertical: 18px;
+        padding-horizontal: 24px;
+        text-align-vertical: top;
+
+        justify-content: center;
+        align-items: center;
 `
 
 export const UploadedImagesContainer = styled.View`
