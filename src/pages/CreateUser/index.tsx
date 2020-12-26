@@ -69,7 +69,7 @@ const CreateUser: React.FC = () => {
   const leftAnimated = useRef(new Animated.Value(-200)).current
   const leftCPFAnimated = useRef(new Animated.Value(-400)).current
   const leftPasswordAnimated = useRef(new Animated.Value(-400)).current
-  const rightAnimated = useRef(new Animated.Value(200)).current
+  const rightAnimated = useRef(new Animated.Value(300)).current
   const rightEmailAnimated = useRef(new Animated.Value(400)).current
   const rightWhatsappAnimated = useRef(new Animated.Value(400)).current
 

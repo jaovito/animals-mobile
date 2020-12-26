@@ -77,10 +77,12 @@ const CreateAnimal: React.FC = () => {
             alert('Prencha todos os campos')
         } else {
             setDisabled(true)
+            console.log(noTabWhatsapp)
+            
             const {data} = await api.post('animals', {
                 name,
                 description,
-                contact: noTabWhatsapp,
+                contact: `55${noTabWhatsapp}`,
                 reason_adoption,
                 breed,
                 citie,
@@ -199,6 +201,7 @@ const CreateAnimal: React.FC = () => {
             selectedValue={uf}
             onValueChange={itemValue => setUf(String(itemValue))}
         >
+            <SelectPicker.Item label='Selecione um Estado' value='' />
             {ufs.map(uf => (
                 <SelectPicker.Item key={uf.id} label={uf.nome} value={uf.sigla} />
             ))}
@@ -211,6 +214,7 @@ const CreateAnimal: React.FC = () => {
             selectedValue={citie}
             onValueChange={itemValue => setCitie(String(itemValue))}
         >
+            <SelectPicker.Item label='Selecione uma Cidade' value='' />
             {cities.map(city => (
                 <SelectPicker.Item key={city.id} label={city.nome} value={city.nome} />
             ))}
