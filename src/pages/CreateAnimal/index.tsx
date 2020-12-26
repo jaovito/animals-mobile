@@ -77,7 +77,6 @@ const CreateAnimal: React.FC = () => {
             alert('Prencha todos os campos')
         } else {
             setDisabled(true)
-            console.log(noTabWhatsapp)
             
             const {data} = await api.post('animals', {
                 name,

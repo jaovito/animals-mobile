@@ -5,7 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Container, ImagesContainer, Image, DetailsContainer, Description, Title, ContactButton, ContactButtonText, City, ReasonAdoptionTitle, ReasonAdoption, Breed, Adoption, Adopted, DescriptionTitle, Modal, ModalCard, ModalHeader, ModalTitle, CloseModal, DeleteButton, DeleteText, DonateButton } from './styles';
 import api from '../../services/api';
 import { useRoute } from '@react-navigation/native';
-import { TouchableOpacity, Animated } from 'react-native';
+import { TouchableOpacity, Animated, Alert } from 'react-native';
 
 interface Route {
   id: number;
@@ -56,7 +56,7 @@ const MyAnimalInfo: React.FC = () => {
       setAdopted(response.data.adopted);
       setImages(response.data.images);
     }).catch(err => {
-      alert(err)
+      Alert.alert('Erro ao obter dados', err)
     })
 
     return () => {
@@ -72,8 +72,8 @@ const MyAnimalInfo: React.FC = () => {
     function handleDonate() {
     api.patch(`animals/${params.id}`, {
       adopted: true
-    }).catch(err => {
-      alert(err)
+    }).catch((err) => {
+      Alert.alert('Erro ao alterar dados', err)
     })
 
     setVisible(!visible)
@@ -81,7 +81,7 @@ const MyAnimalInfo: React.FC = () => {
 
   function handleDelete() {
     api.delete(`animals/${params.id}`).catch(err => {
-      alert(err)
+      Alert.alert('Erro ao deletar pet', 'Não foi possível deletar os dados, não é possível deletar animais doados.')
     })
 
     setVisible(!visible)
